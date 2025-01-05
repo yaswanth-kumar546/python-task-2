@@ -1,0 +1,39 @@
+Company: CODTECH IT SOLUTIONS
+Name: YEJARLA YASWANTH KUMAR
+Domain: Python Programming 
+Duration: 25th Dec to 25th Jan
+Intern Id: CT08EAL
+
+* AUTOMATED REPORT GENERATION
+
+  OVERVIEW OF THIS TASK:
+  This Python script reads data from a CSV file, analyzes it, and generates a formatted PDF report using the ReportLab library. It demonstrates data manipulation with Pandas and PDF creation with ReportLab.
+
+INSTALLATION:
+* PYTHON 3.X
+* PANDAS LIBRARY
+* REPORT LAB LIBRARY
+
+USAGE:
+Name,Age,Score
+Yashu,25,85
+Raj,30,90
+Maxi,35,95
+
+TASK EXPLANATION:
+* Importing Libraries: Import necessary libraries like Pandas for data manipulation and ReportLab for PDF creation.
+
+* Read_data(file_path): Reads data from a CSV file and returns a DataFrame.
+
+* Analyze_data(df): Analyzes the data by generating summary statistics.
+
+* Generate_pdf(dataframe, summary, report_name): Generates a PDF report with the original data and summary statistics.
+
+* Main Function: Specifies the CSV file path, reads data, analyzes it, and generates the PDF report.
+
+
+
+
+
+  
+  
