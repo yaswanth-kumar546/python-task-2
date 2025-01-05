@@ -1,0 +1,59 @@
+import pandas as pd
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+
+# Function to read data from a CSV file
+def read_data(file_path):
+    return pd.read_csv(file_path)
+
+# Function to analyze data
+def analyze_data(df):
+    summary = df.describe()
+    return summary
+
+# Function to generate a PDF report
+def generate_pdf(dataframe, summary, report_name):
+    doc = SimpleDocTemplate(report_name, pagesize=letter)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # Title
+    title = Paragraph("Automated Report", styles['Title'])
+    elements.append(title)
+
+    # Add original data
+    elements.append(Paragraph("Original Data", styles['Heading2']))
+    data_table = Table([dataframe.columns.tolist()] + dataframe.values.tolist())
+    data_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                                    ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                                    ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
+    elements.append(data_table)
+
+    # Add summary data
+    elements.append(Paragraph("Summary Statistics", styles['Heading2']))
+    summary_table = Table([summary.columns.tolist()] + summary.values.tolist())
+    summary_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                       ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                                       ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                       ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                                       ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                                       ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                                       ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
+    elements.append(summary_table)
+
+    # Build the PDF
+    doc.build(elements)
+
+# Main function
+if __name__ == "__main__":
+    file_path = "sample_data.csv"  # Replace with your file path
+    df = read_data(file_path)
+    summary = analyze_data(df)
+    generate_pdf(df, summary, "automated_report.pdf")
